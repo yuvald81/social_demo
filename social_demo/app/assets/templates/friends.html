@@ -1,0 +1,14 @@
+<div ng-controller='friendsCtrl' ng-hide="friends.length == 0">
+<h2>
+    Please pick which one of his friends the adjective describes best
+</h2>
+<ul>
+
+<li ng-repeat="(friendIndex,friend) in friends" style="">
+    <img src ="{{ friend.picture.data.url }}" title="{{ friend.name }}" />
+    <input type="radio" name="adjectives" value="{{ randomAdjectives[friendIndex].id }}" ng-click="saveAdjective(friend.id, randomAdjectives[friendIndex].id)"/>
+    <span>{{ randomAdjectives[friendIndex].name }}</span>
+</li>
+
+</ul>
+</div>

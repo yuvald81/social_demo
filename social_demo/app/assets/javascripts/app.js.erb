@@ -1,0 +1,58 @@
+var app = angular.module('ngSocialApp', ['ngRoute', 'ngResource'])
+  .config(['$routeProvider', '$locationProvider', '$httpProvider', 
+    function($routeProvider, $locationProvider, $httpProvider) {
+      $routeProvider
+        .when('/', {
+          templateUrl: "<%= asset_path('friends.html') %>",
+          controller: 'friendsCtrl'
+        })
+        .otherwise({
+        redirectTo: '/'
+      });
+
+
+      // configure html5 to get links working on jsfiddle
+      $locationProvider.html5Mode(true);
+  }])
+  .controller('MainCtrl', ['$route', '$routeParams', '$location',
+    function($route, $routeParams, $location) {
+      this.$route = $route;
+      this.$location = $location;
+      this.$routeParams = $routeParams;
+  }])
+  .controller('friendsCtrl', ['$scope', '$http', function($scope, $http, $location) {
+    
+    $scope.friends = [];
+    
+
+    $scope.getFriends = function(){
+    
+        $http.get('/api/v1/friends.json').success(function(data){
+            $scope.friends = angular.fromJson(data);
+        });
+    };
+    
+    $scope.getFriends();
+    
+    $scope.randomAdjectives = [];
+    
+   
+    
+    $scope.getAdjectives = function(){
+
+          $http.get('/api/v1/adjectives.json').success(function(data){
+              $scope.randomAdjectives = angular.fromJson(data);
+          });
+       
+    };
+    
+     $scope.getAdjectives();
+     
+     $scope.saveAdjective = function(friend_id, adjective_id){
+       $http.post('/api/v1/friends.json', { firend_id: friend_id, adjective_id: adjective_id}).success(function(data){
+            $scope.getFriends();
+            $scope.getAdjectives();
+        });
+     };
+
+  }]);

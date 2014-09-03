@@ -1,0 +1,23 @@
+<h1>Listing adjectives</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @adjectives.each do |adjective| %>
+      <tr>
+        <td><%= link_to 'Show', adjective %></td>
+        <td><%= link_to 'Edit', edit_adjective_path(adjective) %></td>
+        <td><%= link_to 'Destroy', adjective, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Adjective', new_adjective_path %>
